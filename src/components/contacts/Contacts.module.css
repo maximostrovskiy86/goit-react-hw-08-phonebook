@@ -1,0 +1,22 @@
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.button {
+    width: 150px;
+    height: 25px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    transition: transform 0.2s ease-in;
+}
+
+.button:hover {
+    transform: scale(1.05);
+}
