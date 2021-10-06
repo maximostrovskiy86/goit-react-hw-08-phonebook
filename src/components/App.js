@@ -1,74 +1,61 @@
-import React, {Component} from "react";
+import React, {useEffect, useState} from "react";
 import style from "./App.module.css";
 import DataInput from "./dataInput/DataInput";
 import Contacts from "./contacts/Contacts";
 import Section from "./section/Section";
 import Filter from "./filter/Filter";
 
-class App extends Component {
-    state = {
-        contacts: [],
-        filter: '',
-    }
+const App = () => {
 
-    componentDidMount() {
-        const users = localStorage.getItem('contacts');
-        if (users) {
-            const parseUsers = JSON.parse(users);
-            this.setState({contacts: parseUsers})
+    const [contacts, setContacts] = useState(() => {
+        return JSON.parse(localStorage.getItem('contacts')) ?? [];
+    });
+
+    const [filter, setFilter] = useState('');
+
+    useEffect(() => {
+        if (contacts.length > 0) {
+            console.log('сработал useEffect в IFFFF')
+            localStorage.setItem('contacts', JSON.stringify(contacts));
         }
-    }
+    }, [contacts]);
 
-    componentDidUpdate( prevState) {
-        if (this.state.contacts !== prevState.contacts) {
-            localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-        }
-    }
+    const isContactExist = (name) => contacts.some(item => item.name.toLowerCase() === name.toLowerCase());
 
-    isContactExist = (name) => this.state.contacts.some(item => item.name.toLowerCase() === name.toLowerCase());
+    const filterInputHandler = () => contacts.filter(item =>
+        item.name.toLowerCase().includes(filter.toLowerCase()));
 
-    filterInputHandler = () => this.state.contacts.filter(item =>
-        item.name.toLowerCase().includes(this.state.filter.toLowerCase()));
+    const filterValue = (e) => setFilter(e.target.value);
 
-    setFilter = (e) => {
-        const {value} = e.target;
-        this.setState({
-            filter: value,
+    const addUser = (user) => {
+
+        setContacts(prev => {
+            return [...prev, user];
         })
-    }
+    };
 
-    addUser = (user) => {
-        this.setState(prev => ({
-            contacts: [...prev.contacts, user]
-        }))
-    }
+    const removeUser = (id) => {
+        setContacts(prev => [...prev.filter(contact => contact.id !== id)])
+    };
 
-    removeUser = (id) => {
-        this.setState(prev => ({
-            contacts: [...prev.contacts.filter(contact => contact.id !== id)],
-        }))
-    }
-
-    render() {
-        return (
-            <div className={style.app}>
-                <Section title="Phonebook">
-                    <DataInput
-                        addUser={this.addUser}
-                        isContactExist={this.isContactExist}
-                    />
-                </Section>
-                <Section title="Contacts">
-                    <Filter filter={this.state.filter} setFilter={this.setFilter}/>
-                    <Contacts
-                        users={this.state.contacts}
-                        filterInputHandler={this.filterInputHandler()}
-                        removeUser={this.removeUser}
-                    />
-                </Section>
-            </div>
-        );
-    }
+    return (
+        <div className={style.app}>
+            <Section title="Phonebook">
+                <DataInput
+                    addUser={addUser}
+                    isContactExist={isContactExist}
+                />
+            </Section>
+            <Section title="Contacts">
+                <Filter filter={filter} setFilter={filterValue}/>
+                <Contacts
+                    users={contacts}
+                    filterInputHandler={filterInputHandler()}
+                    removeUser={removeUser}
+                />
+            </Section>
+        </div>
+    );
 }
 
 export default App;
