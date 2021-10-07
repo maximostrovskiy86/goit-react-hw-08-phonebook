@@ -14,10 +14,7 @@ const App = () => {
     const [filter, setFilter] = useState('');
 
     useEffect(() => {
-        if (contacts.length > 0) {
-            console.log('сработал useEffect в IFFFF')
             localStorage.setItem('contacts', JSON.stringify(contacts));
-        }
     }, [contacts]);
 
     const isContactExist = (name) => contacts.some(item => item.name.toLowerCase() === name.toLowerCase());
