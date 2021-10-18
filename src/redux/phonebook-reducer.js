@@ -1,36 +1,26 @@
 import {combineReducers} from 'redux';
-import types from './phonebook-types';
+import {createReducer} from '@reduxjs/toolkit';
+import actions from './phonebook-actions';
 
-const items = (state = [], {type, payload}) => {
+const items = createReducer([], {
+    [actions.addContact]: (state, {payload}) => {
+        const isFind = state.some(item => item.name.toLowerCase() === payload.name.toLowerCase());
 
-    const isContactExist = () => {
-        alert(`${payload.name} is already in contacts.`)
-        return [...state];
-    }
+        const isContactExist = () => {
+            alert(`${payload.name} is already in contacts.`);
+            return [...state];
+        }
 
-    switch (type) {
-        case types.ADD:
-            console.log(payload)
-            const isFind = state.some(item => item.name.toLowerCase() === payload.name.toLowerCase());
-            return  isFind ?  isContactExist() : [...state, payload];
-        case types.DELETE:
-            return state.filter(contact => contact.id !== payload);
-        default:
-            return state;
-    }
-}
+        return isFind ? isContactExist() : [...state, payload];
+    },
+    [actions.deleteContact]: (state, {payload}) => state.filter(contact => contact.id !== payload),
+});
 
-const filter = (state = '', {type, payload}) => {
-    switch (type) {
-        case types.CHANGE_FILTER:
-            return payload;
-
-        default:
-            return state;
-    }
-}
+const filter = createReducer('', {
+    [actions.changeFilter]: (_, {payload}) => payload,
+});
 
 export default combineReducers({
     items,
     filter,
-})
+});

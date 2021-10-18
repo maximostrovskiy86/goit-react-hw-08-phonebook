@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import contactsActions from "../../redux/phonebook-actions";
 import style from "./Filter.module.css";
 
-
 const Filter = ({filter, setFilter}) => {
     return (
         <>

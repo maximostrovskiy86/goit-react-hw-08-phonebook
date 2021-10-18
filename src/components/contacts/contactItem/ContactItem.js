@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import s from "../Contacts.module.css";
 
 const ContactItem = ({name, id, number, onRemoveUser}) => {
-    console.log(id)
+
     const remove = () => onRemoveUser(id);
 
     return (
@@ -19,13 +19,5 @@ ContactItem.propTypes = {
         number: PropTypes.string.isRequired,
     }),
 }
-
-// const mapDispatchToProps = dispatch => ({
-//     removeUser:  id => dispatch(contactsActions.deleteContact(id)),
-// });
-
-// const mapStateToProps = state => ({
-//         user: state.contacts.items
-// });
 
 export default ContactItem;

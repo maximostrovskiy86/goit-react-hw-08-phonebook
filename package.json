@@ -2,8 +2,9 @@
   "name": "goit-react-hw-03-phonebook",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://maximostrovskiy86.github.io/goit-react-hw-06-phonebook",
+  "homepage": "https://maximostrovskiy86.github.io/goit-react-hw-06-phonebook-toolkit",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -16,6 +17,8 @@
     "react-redux": "^7.2.5",
     "react-scripts": "4.0.3",
     "redux": "^4.1.1",
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^6.0.0",
     "shortid": "^2.2.16",
     "uuid": "^8.3.2",
     "web-vitals": "^1.1.2"
