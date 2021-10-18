@@ -1,0 +1,13 @@
+.input {
+    margin-top: 8px;
+    height: 25px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+}
+
+.label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
