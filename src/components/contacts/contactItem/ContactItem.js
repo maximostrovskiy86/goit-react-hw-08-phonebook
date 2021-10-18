@@ -2,11 +2,12 @@ import React from "react";
 import PropTypes from 'prop-types';
 import s from "../Contacts.module.css";
 
-const ContactItem = ({user, removeUser}) => {
-    const remove = () => removeUser(user.id);
+const ContactItem = ({name, id, number, onRemoveUser}) => {
+    console.log(id)
+    const remove = () => onRemoveUser(id);
 
     return (
-        <li className={s.item}><span>{user.name}: </span>{user.number}
+        <li className={s.item}><span>{name}: </span>{number}
             <button type="button" className={s.button} onClick={remove}>Delete</button>
         </li>
     )
@@ -18,5 +19,13 @@ ContactItem.propTypes = {
         number: PropTypes.string.isRequired,
     }),
 }
+
+// const mapDispatchToProps = dispatch => ({
+//     removeUser:  id => dispatch(contactsActions.deleteContact(id)),
+// });
+
+// const mapStateToProps = state => ({
+//         user: state.contacts.items
+// });
 
 export default ContactItem;

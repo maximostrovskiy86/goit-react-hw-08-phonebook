@@ -1,9 +1,11 @@
 import React, {useState} from "react";
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import style from "./DataInput.module.css";
 import shortid from 'shortid';
+import contactsActions from "../../redux/phonebook-actions";
 
-const DataInput = ({addUser, isContactExist}) => {
+const DataInput = ({addUser}) => {
 
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
@@ -25,11 +27,6 @@ const DataInput = ({addUser, isContactExist}) => {
 
     const onHandleSubmit = (e) => {
         e.preventDefault();
-
-        if (isContactExist(name)) {
-            alert(`${name} is already in contacts.`);
-            return;
-        }
 
         addUser({
             name: name,
@@ -78,4 +75,8 @@ DataInput.propTypes = {
     addUser: PropTypes.func.isRequired,
 }
 
-export default DataInput;
+const mapDispatchToProps = dispatch => ({
+    addUser: (user) => dispatch(contactsActions.addContact(user)),
+});
+
+export default connect(null, mapDispatchToProps)(DataInput);
