@@ -7,6 +7,15 @@
     border-radius: 5px;
 }
 
+.title {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    font-size: 50px;
+    transform: translate(50%, -50%);
+    z-index: 10;
+}
+
 .number {
     margin-left: 5px;
     height: 25px;

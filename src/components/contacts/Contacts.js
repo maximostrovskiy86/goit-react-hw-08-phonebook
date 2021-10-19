@@ -1,10 +1,16 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PropTypes from 'prop-types';
-import ContactItem from "./contactItem/ContactItem";
+import ContactItem from "../contactItem/ContactItem";
 import {connect} from "react-redux";
-import contactsActions from "../../redux/phonebook-actions";
+import contactsOperations from "../../redux/phonebook/phonobook-operations";
+import contactsSelector from "../../redux/phonebook/phonobook-selectors";
 
-const Contacts = ({contacts, removeUser}) => {
+const Contacts = ({contacts, removeUser, fetchContacts}) => {
+
+    useEffect(() => {
+        fetchContacts();
+    }, [])
+
     return (
         <>
             {contacts.length > 0 && (
@@ -26,20 +32,18 @@ const Contacts = ({contacts, removeUser}) => {
 
 Contacts.propTypes = {
     contacts: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
     })),
     removeUser: PropTypes.func.isRequired,
 }
 
-const filterInputHandler = (allContacts, filter) => allContacts.filter(item =>
-    item.name.toLowerCase().includes(filter.toLowerCase()));
-
-const mapStateToProps = ({contacts: {items, filter}}) => ({
-    contacts: filterInputHandler(items, filter)
+const mapStateToProps = (state) => ({
+    contacts: contactsSelector.getVisibleContacts(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-    removeUser: id => dispatch(contactsActions.deleteContact(id)),
+    removeUser: id => dispatch(contactsOperations.deleteContact(id)),
+    fetchContacts: () => dispatch(contactsOperations.fetchContacts()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Contacts);

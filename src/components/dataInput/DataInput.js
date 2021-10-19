@@ -2,10 +2,10 @@ import React, {useState} from "react";
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import style from "./DataInput.module.css";
-import shortid from 'shortid';
-import contactsActions from "../../redux/phonebook-actions";
+import contactsOperations from "../../redux/phonebook/phonobook-operations";
+import contactsSelector from "../../redux/phonebook/phonobook-selectors";
 
-const DataInput = ({addUser}) => {
+const DataInput = ({addUser, contacts, isLoadingContacts}) => {
 
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
@@ -25,17 +25,22 @@ const DataInput = ({addUser}) => {
         }
     }
 
+    const isFind = () => contacts.some(item => item.name.toLowerCase() === name.toLowerCase());
+
     const onHandleSubmit = (e) => {
         e.preventDefault();
 
-        addUser({
-            name: name,
-            number: number,
-            id: shortid.generate(),
-        });
+        if (isFind()) {
+            alert(`${name} is already in contacts.`);
+        } else {
+            addUser({
+                name: name,
+                number: number,
+            });
 
-        setName('');
-        setNumber('');
+            setName('');
+            setNumber('');
+        }
     }
 
     return (
@@ -67,6 +72,7 @@ const DataInput = ({addUser}) => {
                 />
             </label>
             <button type="submit" className={style.btn}>Add contact</button>
+            {isLoadingContacts && <h2 className={style.title}>Загружаем...</h2>}
         </form>
     )
 }
@@ -75,8 +81,13 @@ DataInput.propTypes = {
     addUser: PropTypes.func.isRequired,
 }
 
+const mapStateToProps = (state) => ({
+    contacts: contactsSelector.getContacts(state),
+    isLoadingContacts: contactsSelector.getLoading(state),
+})
+
 const mapDispatchToProps = dispatch => ({
-    addUser: (user) => dispatch(contactsActions.addContact(user)),
+    addUser: (user) => dispatch(contactsOperations.addContact(user)),
 });
 
-export default connect(null, mapDispatchToProps)(DataInput);
+export default connect(mapStateToProps, mapDispatchToProps)(DataInput);

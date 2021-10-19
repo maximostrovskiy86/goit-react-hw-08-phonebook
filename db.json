@@ -1,0 +1,14 @@
+{
+  "contacts": [
+    {
+      "name": "Maxenty",
+      "number": "+546546",
+      "id": 1
+    },
+    {
+      "name": "Mfxim",
+      "number": "+546546",
+      "id": 2
+    }
+  ]
+}
