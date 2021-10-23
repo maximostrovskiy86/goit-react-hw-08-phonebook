@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import Button from 'react-bootstrap/Button';
 import s from "./Contacts.module.css";
 
 const ContactItem = ({name, id, number, onRemoveUser}) => {
@@ -8,7 +9,7 @@ const ContactItem = ({name, id, number, onRemoveUser}) => {
 
     return (
         <li className={s.item}><span>{name}: </span>{number}
-            <button type="button" className={s.button} onClick={remove}>Delete</button>
+            <Button variant="warning" onClick={remove}>Delete</Button>
         </li>
     )
 }

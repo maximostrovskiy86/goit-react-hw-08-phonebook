@@ -12,11 +12,13 @@ const getVisibleContacts = createSelector([getContacts, getFilter],
             item.name.toLowerCase().includes(filter.toLowerCase()));
     });
 
-export default {
+const selectors = {
     getContacts,
     getLoading,
     getFilter,
     getVisibleContacts,
 }
+
+export default selectors;
 
 

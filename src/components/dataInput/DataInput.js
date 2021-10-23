@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import style from "./DataInput.module.css";
+import style from "./DataInput.module.scss";
+import Button from 'react-bootstrap/Button';
 import contactsOperations from "../../redux/phonebook/phonobook-operations";
 import contactsSelector from "../../redux/phonebook/phonobook-selectors";
 
@@ -71,7 +72,7 @@ const DataInput = ({addUser, contacts, isLoadingContacts}) => {
                     value={number}
                 />
             </label>
-            <button type="submit" className={style.btn}>Add contact</button>
+            <Button type="submit" variant="success" className={style.btn}>Add contact </Button>
             {isLoadingContacts && <h2 className={style.title}>Загружаем...</h2>}
         </form>
     )

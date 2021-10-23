@@ -1,0 +1,23 @@
+.avatar {
+    margin-right: 4px;
+    border-radius: 50%;
+}
+
+.name {
+    font-weight: 700;
+    margin-right: 12px;
+}
+
+.button {
+    width: 100px;
+    height: 20px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    transition: transform 0.2s ease-in;
+    &:hover {
+        transform: scale(1.05);
+    }
+}

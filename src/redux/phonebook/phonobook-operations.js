@@ -11,14 +11,13 @@ import {
     fetchContactError,
 } from "./phonebook-actions";
 
-axios.defaults.baseURL = 'http://localhost:3004';
+axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
 const fetchContacts = () => async dispatch => {
     dispatch(fetchContactsRequest());
 
     try {
         const {data} = await axios.get('/contacts');
-        console.log(data)
         dispatch(fetchContactSuccess(data));
     } catch (error) {
         dispatch(fetchContactError(error));
@@ -47,10 +46,12 @@ const deleteContact = id => dispatch => {
         .catch(error => dispatch(deleteContactError(error)));
 }
 
-export default {
+const operations = {
     fetchContacts,
     addContact,
     deleteContact,
 }
+
+export default operations;
 
 

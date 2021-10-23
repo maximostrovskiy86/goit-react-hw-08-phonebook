@@ -1,15 +1,16 @@
 import React, {useEffect} from "react";
 import PropTypes from 'prop-types';
+import {useSelector, useDispatch} from "react-redux";
 import ContactItem from "../contactItem/ContactItem";
-import {connect} from "react-redux";
-import contactsOperations from "../../redux/phonebook/phonobook-operations";
-import contactsSelector from "../../redux/phonebook/phonobook-selectors";
+import {contactsOperations, contactsSelector} from "../../redux/phonebook";
 
-const Contacts = ({contacts, removeUser, fetchContacts}) => {
+const Contacts = () => {
+    const contacts = useSelector(contactsSelector.getVisibleContacts);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        fetchContacts();
-    }, [])
+        dispatch(contactsOperations.fetchContacts());
+    }, [dispatch])
 
     return (
         <>
@@ -21,7 +22,7 @@ const Contacts = ({contacts, removeUser, fetchContacts}) => {
                             id={id}
                             name={name}
                             number={number}
-                            onRemoveUser={() => removeUser(id)}
+                            onRemoveUser={() => dispatch(contactsOperations.deleteContact(id))}
                         />
                     ))}
                 </ul>
@@ -32,18 +33,7 @@ const Contacts = ({contacts, removeUser, fetchContacts}) => {
 
 Contacts.propTypes = {
     contacts: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number.isRequired,
-    })),
-    removeUser: PropTypes.func.isRequired,
+        id: PropTypes.string.isRequired,
+    }))
 }
-
-const mapStateToProps = (state) => ({
-    contacts: contactsSelector.getVisibleContacts(state),
-});
-
-const mapDispatchToProps = dispatch => ({
-    removeUser: id => dispatch(contactsOperations.deleteContact(id)),
-    fetchContacts: () => dispatch(contactsOperations.fetchContacts()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Contacts);
+export default Contacts;
